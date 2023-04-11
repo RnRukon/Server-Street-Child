@@ -12,7 +12,7 @@ const streetChildSchema = Mongoose.Schema({
     status: {
         type: String,
         default: "pending",
-        enum: ["pending", "approved","delivered", "rejected"],
+        enum: ["pending", "approved", "delivered", "rejected"],
     },
     policeVerifyStatus: {
         type: String,
@@ -40,7 +40,8 @@ const streetChildSchema = Mongoose.Schema({
         require: [true, "gender is required"],
 
     },
-
+    childId: String,
+    organization: String
 
 },
     {

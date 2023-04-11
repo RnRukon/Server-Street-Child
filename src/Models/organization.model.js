@@ -1,6 +1,6 @@
 const Mongoose = require("mongoose");
 const validator = require("validator");
-
+const { ObjectId } = Mongoose.Schema.Types;
 const organizationSchema = Mongoose.Schema({
     name: {
         type: String,
@@ -56,11 +56,21 @@ const organizationSchema = Mongoose.Schema({
         type: Number,
         require: [true, "Seat is required"],
     },
+    emptySeat: {
+        type: Number,
+        default: 0
+    },
     role: {
         type: String,
         default: "organization"
     },
-    founded:String
+    founded: String,
+    childList: [
+        {
+            type: ObjectId,
+            ref: "Child"
+        }
+    ]
 },
     {
         timestamps: true,

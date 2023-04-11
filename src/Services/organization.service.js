@@ -6,6 +6,21 @@ exports.registrationOrganizationService = async (organization) => {
     return data;
 };
 exports.getOrganizationsOrganizationService = async () => {
-    const data = await Organization.find({});
+    const data = await Organization.find({}).populate('childList');
+    return data;
+};
+exports.updateOrganizationService = async (id, organizationData) => {
+    const data = await Organization.findByIdAndUpdate({ _id: id },
+        { organizationData },
+        { runValidators: true });
+    return data;
+};
+exports.deliveryChildService = async ({ childId, organizationId }) => {
+
+    const data = await Organization.findByIdAndUpdate({ _id: organizationId }, {
+        $push: {
+            childList: childId
+        }
+    });
     return data;
 };

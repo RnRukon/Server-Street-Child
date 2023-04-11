@@ -16,7 +16,8 @@ exports.addStreetChild = async (req, res) => {
                 childList: child._id
             }
         })
-
+        child.childId = child._id;
+        child.save()
 
         res.status(200).json({
             result: child,
