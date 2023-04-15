@@ -9,9 +9,15 @@ exports.getOrganizationsOrganizationService = async () => {
     const data = await Organization.find({}).populate('childList');
     return data;
 };
+exports.getSingleOrganizationService = async (id) => {
+   
+    const data = await Organization.findById({ _id: id }).populate('childList');
+    return data;
+};
 exports.updateOrganizationService = async (id, organizationData) => {
+
     const data = await Organization.findByIdAndUpdate({ _id: id },
-        { organizationData },
+        organizationData,
         { runValidators: true });
     return data;
 };

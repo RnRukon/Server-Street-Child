@@ -15,6 +15,7 @@ app.use(express.static('./Public'));
 const users = require("./Routes/user.route");
 const streetChild = require("./Routes/streetChild.route");
 const organizations = require("./Routes/organizations.route");
+const feedbacks = require("./Routes/feedbacks.route");
 
 // default route 
 
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/street-child/users", users);
 app.use("/api/v1/street-child/streetChild", streetChild);
 app.use("/api/v1/street-child/organizations", organizations);
+app.use("/api/v1/street-child/feedbacks", feedbacks);
 
 app.use("*", (req, res, nex) => {
     res.status(404).send(`

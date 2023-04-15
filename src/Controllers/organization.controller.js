@@ -1,6 +1,6 @@
 const Child = require("../Models/StreetChild.model");
 const Organization = require("../Models/organization.model");
-const { registrationOrganizationService, getOrganizationsOrganizationService, deliveryChildService, updateOrganizationService } = require("../Services/organization.service");
+const { registrationOrganizationService, getOrganizationsOrganizationService, deliveryChildService, updateOrganizationService, getSingleOrganizationService } = require("../Services/organization.service");
 
 exports.registrationOrganization = async (req, res) => {
     try {
@@ -37,9 +37,30 @@ exports.getOrganizationsOrganization = async (req, res) => {
         });
     }
 };
+exports.getSingleOrganization = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const organization = await getSingleOrganizationService(id);
+
+        res.status(200).json({
+            result: organization,
+            status: "success",
+            message: "Get Organizations is Successfully",
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "fail",
+            error: 'Server error, please try ageing'
+        });
+    }
+};
+
+
 exports.updateOrganization = async (req, res) => {
     try {
         const id = req.params.id
+
         const organization = await updateOrganizationService(id, req.body);
 
         res.status(200).json({
@@ -99,7 +120,7 @@ exports.deliveryChild = async (req, res) => {
         const organization = await deliveryChildService(req.body);
 
         child.status = 'delivered';
-        child.organization=findChild.name;
+        child.organization = findChild.name;
 
         child.save()
         res.status(200).json({

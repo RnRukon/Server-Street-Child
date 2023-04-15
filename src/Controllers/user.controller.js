@@ -1,5 +1,6 @@
+const User = require("../Models/user.model");
 const { registrationOrganizationService } = require("../Services/organization.service");
-const { saveUserService, findByEmailUserService, updateProfileService, getAllUserService, getSingleUserService } = require("../Services/user.service");
+const { saveUserService, findByEmailUserService, updateProfileService, getAllUserService, getSingleUserService, makeAdminService } = require("../Services/user.service");
 const { generateToken } = require("../utils/token");
 
 exports.createUser = async (req, res) => {
@@ -98,13 +99,10 @@ exports.getMe = async (req, res) => {
         });
     }
 };
+
 exports.updateProfile = async (req, res) => {
     try {
-
-
         const user = await updateProfileService(req.user.email, req.body);
-
-
         res.status(200).json({
             result: {
                 user: user,
@@ -112,6 +110,34 @@ exports.updateProfile = async (req, res) => {
             },
             status: "success",
             message: "Update Profile Successfully",
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "fail",
+            error: 'Server error, please try ageing'
+        });
+    }
+};
+exports.makeAdmin = async (req, res) => {
+    try {
+        const email = req.body.email;
+
+        const findUser = await User.findOne({ email: email });
+        if (!findUser) {
+            return res.status(404).json({
+                status: "fail",
+                error: 'This Email is not user'
+            });
+        }
+
+        const user = await makeAdminService(email);
+        res.status(200).json({
+            result: {
+                user: user,
+
+            },
+            status: "success",
+            message: "Make Admin is Successfully",
         });
     } catch (error) {
         res.status(500).json({

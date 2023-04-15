@@ -10,6 +10,10 @@ exports.getMyAllStreetChildService = async (id) => {
     const data = await Child.find({ user: id }).select('-user');
     return data;
 };
+exports.getSingleChildService = async (id) => {
+    const data = await Child.findOne({ _id: id }).populate('user');
+    return data;
+};
 exports.getAllStreetChildService = async (id) => {
     const data = await Child.find({}).populate('user');
     return data;

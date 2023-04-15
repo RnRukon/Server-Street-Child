@@ -28,5 +28,13 @@ exports.updateProfileService = async (email, data) => {
         });
     return user;
 };
+exports.makeAdminService = async (email) => {
+    const user = await User.findOneAndUpdate({ email },
+        { role: 'user' },
+        {
+            runValidators: true
+        });
+    return user;
+};
 
 

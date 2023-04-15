@@ -1,5 +1,5 @@
 const User = require("../Models/user.model");
-const { addStreetChildService, getMyAllStreetChildService, getAllStreetChildService, updateChildService } = require("../Services/streetChild.service");
+const { addStreetChildService, getMyAllStreetChildService, getAllStreetChildService, updateChildService,getSingleChildService } = require("../Services/streetChild.service");
 const { findByEmailUserService, } = require("../Services/user.service");
 
 exports.addStreetChild = async (req, res) => {
@@ -31,6 +31,22 @@ exports.addStreetChild = async (req, res) => {
         });
     }
 };
+exports.getSingleChildByUserId = async (req, res) => {
+    try {
+        const child = await getSingleChildService(req.params.id);
+
+        res.status(200).json({
+            result: child,
+            status: "success",
+            message: "Get Child is Successfully",
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "fail",
+            error: 'Server error, please try ageing'
+        });
+    }
+};
 exports.getMyAllStreetChild = async (req, res) => {
     try {
 
@@ -49,6 +65,8 @@ exports.getMyAllStreetChild = async (req, res) => {
         });
     }
 };
+
+
 exports.getAllStreetChild = async (req, res) => {
     try {
 
