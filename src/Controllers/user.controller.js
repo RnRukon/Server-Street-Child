@@ -5,7 +5,6 @@ const { generateToken } = require("../utils/token");
 
 exports.createUser = async (req, res) => {
     try {
-
         const findUser = await findByEmailUserService(req.body.email);
 
         if (findUser) {
@@ -46,9 +45,15 @@ exports.loginUser = async (req, res) => {
 
         const findUser = await findByEmailUserService(req.body.email);
 
+        if (req.body.password !== findUser.password) {
+            return res.status(401).json({
+                error: 'Password wrong,please try again!'
+            })
+        }
+
         if (!findUser) {
             return res.status(401).json({
-                message: 'You are not Registered,Please before do you Register then doing login'
+                error: 'You are not Registered,Please before do you Register then doing login'
             })
         }
 

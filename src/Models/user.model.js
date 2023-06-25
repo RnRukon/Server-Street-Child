@@ -8,17 +8,17 @@ const userSchema = Mongoose.Schema({
         require: [true, "Name is require"],
         trim: true,
     },
-    username: {
-        type: String,
-        trim: true,
-        unique: [true, "Username is exist, please provide a unique username!"],
-    },
+
     email: {
         type: String,
         require: true,
         trim: true,
         validate: [validator.isEmail, "Provide a valid Email"],
         unique: [true, "Email is must be unique"],
+    },
+    password: {
+        type: String,
+        require: true,
     },
     phoneNumber: {
         type: String,
@@ -50,7 +50,7 @@ const userSchema = Mongoose.Schema({
     upazila: String,
     policeStation: String,
     division: String,
-    founded:String
+    founded: String
 },
     {
         timestamps: true,
