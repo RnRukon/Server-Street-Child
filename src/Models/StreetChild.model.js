@@ -41,8 +41,15 @@ const streetChildSchema = Mongoose.Schema({
 
     },
     childId: String,
-    organization: String
-
+    organization: String,
+    seat: {
+        type: Number,
+        require: [true, "Seat is required"],
+    },
+    emptySeat: {
+        type: Number,
+        default: 0
+    },
 },
     {
         timestamps: true,
